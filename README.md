@@ -1,6 +1,6 @@
 # README #
 
-# Timecode
+Timecode programmer test.
 
 ### Your task is to do the following ###
 
@@ -16,3 +16,7 @@ https://en.wikipedia.org/wiki/Linear_timecode#Longitudinal_timecode_data_format
 
 * Use Visual Studio 2019 or newer.
 * Optionally, you may use any IDE, or method to compile that you wish.
+
+### Who do I talk to? ###
+
+* wmn@futureuniverse.com
