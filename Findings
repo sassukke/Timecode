@@ -1,0 +1,62 @@
+Aleksandru feedback:
+
+Strengths:
+- Almost gives correct result
+- Well documented
+- const correct member functions
+- No imports of global namespaces
+
+Improvements:
+- Doesn't build due to missing include dir
+- Doesn't build because of name collision with <time.h>
+- public functions that do nothing except call their private Wrapped counterparts
+- timeList::TimeList::extractSamplePacakgesJsonWrap
+- takes data by copy, serializes to string and parses again.
+- In push_back loop default constructs a time::Time instance, sets HiWord and LoWord if they exist. If they don't exist still push back default constructed time::Time which can have uninitialized members.
+- Uses std::list instead of std::vector
+- Total size is known from before, we're going to do a sort-like operation.
+- concatenation of hi and lo words by creating temporary strings. You print after sorting, you should see that this doesn't always work. See example:
+   time code in format HH:mm:SS:FF from array = 23:23:24:22
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:23
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:24
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:25
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:26
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:27
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:28
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:29
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:0
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:1
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:2
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:3
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:4
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:5
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:6
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:7
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:8
+
+   time code in format HH:mm:SS:FF from array = 23:23:24:9
+
+- Unfortunately the correct function time::Time::setSamples64Bits is never used, only time::Time::setConcatenatedSamples64Bits.
+- You might enjoy using ranged-for loops or auto to avoid needing to type container<Type>::iterator often. This makes it easier to explore other data containers.
+- Min/Max would try to access invalid iterators with empty input.
+- findSpecificValueWrap can also attempt to access invalid iterators.
+- Time class contains many different representations of the timecode, only using one representation eliminates the possibility of having partially valid data.
+- Time::displayTimeCodeReadable
+  -> Due to previous point needs to calculate actual hour/minute/second/frame. It is surprising that printing also changes the internal state.
+  -> formats and prints to std::cout, it could be nice to only format and return a string or to have the output stream as a parameter.
